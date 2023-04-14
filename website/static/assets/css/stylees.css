@@ -1,0 +1,88 @@
+.login-box {
+    max-width: 500px;
+    margin: auto;
+    background: #fff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #009970;
+    text-align: center;
+  }
+  
+  .login-box form {
+    position: relative;
+  }
+  
+  .login-box form .user-box {
+    margin-bottom: 20px;
+  }
+  
+  .login-box form .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+    border: none;
+    border-bottom: 2px solid #d9d9d9;
+    outline: none;
+    background: transparent;
+  }
+  
+  .login-box form .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #999;
+    pointer-events: none;
+    transition: 0.5s;
+  }
+  
+  .login-box form .user-box input:focus ~ label,
+  .login-box form .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #009970;
+    font-size: 14px;
+  }
+  
+  .login-box a {
+    display: inline-block;
+    background: #009970;
+    padding: 10px 25px;
+    margin-top: 30px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .login-box a:hover {
+    background: #00b383;
+  }
+  
+  /* Responsive styles */
+  @media only screen and (max-width: 768px) {
+    .login-box {
+      padding: 30px;
+    }
+    .login-box h2 {
+      font-size: 24px;
+    }
+    .login-box form .user-box input {
+      font-size: 14px;
+    }
+    .login-box a {
+      margin-top: 20px;
+      padding: 10px 20px;
+    }
+  }
+
+  
