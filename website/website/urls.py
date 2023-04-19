@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('home.urls')),
     path('supervisor login/', include('supervisor_login.urls')),
     path('user login/', include('user_login.urls')),
-    path('signup/', include('superspace.urls')),
+    path('signup/', include('add_user.urls')),
+    path('map/', include('add_user.urls')),
     path('interface/', include('superspace.urls')),
     path('test/', include('testtest.urls')),
     
