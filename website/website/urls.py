@@ -27,6 +27,7 @@ urlpatterns = [
     path('signup/', include('add_user.urls')),
     path('map/', include('add_user.urls')),
     path('interface/', include('superspace.urls')),
+    path('userinterface/', include('userspace.urls')),
     path('test/', include('testtest.urls')),
     
 

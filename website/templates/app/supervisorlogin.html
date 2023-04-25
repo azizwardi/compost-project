@@ -6,16 +6,23 @@
         <div class="border border-3 border-success"></div>
         <div class="card bg-white shadow-lg">
           <div class="card-body p-5">
-            <form class="mb-3 mt-md-4">
+            <form class="mb-3 mt-md-4" method="post">
+              {% csrf_token %}
               <h2 class="fw-bold mb-2 text-uppercase ">Supervisor</h2>
               <p class=" mb-5">Please enter your login and password!</p>
               <div class="mb-3">
-                <label for="email" class="form-label ">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                <label for="email" class="form-label ">Username</label>
+                {{ form.pseudo }}
+                {% if form.pseudo.errors %}<h4>
+                <div class="text-danger" role="alert">{{ form.pseudo.errors }}</div></4>
+                {% endif %}
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label ">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="*******">
+                {{ form.mot_de_passe }}
+                {% if form.mot_de_passe.errors %}<h4>
+                <div class="text-danger" role="alert">{{ form.mot_de_passe.errors }}</div></h4>
+                {% endif %}
               </div>
               <p class="small"><a class="text-primary" href="forget-password.html">Forgot password?</a></p>
               <div class="d-grid">

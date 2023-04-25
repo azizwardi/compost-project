@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'user_login',
     'home',
     'superspace',
+    'userspace',
     'add_user',
     'testtest',
 
