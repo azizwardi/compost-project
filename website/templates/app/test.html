@@ -28,7 +28,11 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
+        <h1><a href="{% url 'update' %}">Update</a></h1>
+        <h1>{{ post.title }}</h1>
+        <p>Temperature: {{ post.temperature }}</p>
+        <p>Humidity: {{ post.humidity }}</p>
+        <p>{{ post.content }}</p>
       </div>
 
       <!-- Modal footer -->

@@ -28,7 +28,7 @@ urlpatterns = [
     path('map/', include('add_user.urls')),
     path('interface/', include('superspace.urls')),
     path('userinterface/', include('userspace.urls')),
-    path('test/', include('testtest.urls')),
+    path('test/', include('app_mqtt.urls')),
     
 
 ]

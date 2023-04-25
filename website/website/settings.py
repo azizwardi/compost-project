@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'superspace',
     'userspace',
     'add_user',
+    'app_mqtt',
     'testtest',
 
 ]
@@ -150,3 +151,9 @@ MEDIA_ROOT = BASE_DIR / 'img'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MQTT_SERVER = 'eu1.cloud.thethings.network'
+MQTT_PORT = 1883
+MQTT_KEEPALIVE = 60
+MQTT_USER = 'loratestappl@ttn'
+MQTT_PASSWORD = 'NNSXS.XJYVLNIMEZLZXO4TNXEY2MM4HZZ6QHKESAPCOKA.MYOIZCX3W6WXAARBOLKGYQF5CVLSQMSFJ7SGYVFIRQGPBVSUPKOA'
