@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.gis.db import models 
 from django.contrib.gis.admin import OSMGeoAdmin
 
+
 class user(models.Model):
     nom=models.CharField(max_length=100,null=True)
     prenom=models.CharField(max_length=100,null=True)
@@ -10,12 +11,15 @@ class user(models.Model):
     e_mail=models.EmailField(max_length=100,null=True)
     position=models.PointField(null=True)
     image=models.ImageField(null=True)
+
+    nodeuser=models.ForeignKey('add_user.nodes', on_delete=models.CASCADE, null=True, related_name='user')
     def __str__(self):
         return f"{self.prenom} {self.nom}"
     
 
 
 class nodes(models.Model):
+    id_node= models.AutoField(primary_key=True, default=None)
     Name = models.CharField(max_length=50,blank=True, null=True)
     Description = models.CharField(max_length=100,blank=True, null=True)
     Position=models.PointField(null=True)
@@ -23,7 +27,7 @@ class nodes(models.Model):
     Longitude =models.CharField(max_length=50, null=True,blank=True)
     
     def __str__(self):
-        return "Node " + str(self.id) 
+        return "Node " + str(self.id_node) 
     
     class Meta:
        verbose_name_plural = "Nodes"

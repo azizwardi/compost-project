@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns=[
     path('',views.compte,name='compte'),
-    path('map/', views.add_node, name='add_node'),
+    path('<str:pseudo>/map', views.add_node, name='add_node'),
 ]

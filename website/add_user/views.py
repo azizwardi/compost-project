@@ -8,17 +8,24 @@ def compte(request):
             if formulaire.is_valid():
                 formulaire.enregistrer()
                 pseudo = formulaire.cleaned_data['pseudo']
-                return redirect('map/')
+                return redirect('add_node',pseudo)
             return render(request, 'app/signup.html', {'form': formulaire})
         return render(request, 'app/signup.html', {'form': Form_User()})
 
-def add_node(request):
-    # If a POST request is received, process the form data and save to the database
+def add_node(request, pseudo):
+    user_instance = user.objects.get(pseudo=pseudo)
+
+
     if request.method == 'POST':
-        mylatitude = request.POST.get('lat') 
-        mylongitude = request.POST.get('lng') 
-        point= Point(x=float(mylongitude),y=float(mylatitude))
-        instance = nodes(Position=point, Latitude=mylatitude,Longitude=mylongitude)
-        instance.save()
-        return redirect('add_node')
+        mylatitude = request.POST.get('lat')
+        mylongitude = request.POST.get('lng')
+        point = Point(x=float(mylongitude), y=float(mylatitude))
+
+        node_instance = nodes(Position=point, Latitude=mylatitude, Longitude=mylongitude)
+        node_instance.save()
+
+        user_instance.nodeuser = node_instance
+        user_instance.save()
+
+        return redirect('interface')
     return render(request, 'app/maps.html', {})
