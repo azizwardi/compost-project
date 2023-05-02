@@ -4,15 +4,15 @@ from django.contrib.gis.geos import Point
 from .models import *
 
 class Form_User(forms.Form):
-    nom = forms.CharField(required=True, max_length=user._meta.get_field(
+    nom = forms.CharField(required=True, max_length=client._meta.get_field(
         'nom').max_length, widget=forms.TextInput(attrs={'id': "nom", 'name': "nom", 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px", 'placeholder': 'Nom'}))
-    prenom = forms.CharField(required=True, max_length=user._meta.get_field(
+    prenom = forms.CharField(required=True, max_length=client._meta.get_field(
         'prenom').max_length, widget=forms.TextInput(attrs={'id': 'prenom', 'name': 'prenom', 'placeholder': 'Prénom', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
-    telephone = forms.CharField(required=True, max_length=user._meta.get_field(
+    telephone = forms.CharField(required=True, max_length=client._meta.get_field(
         'NB_GSM').max_length, widget=forms.TextInput(attrs={'id': 'NB_GSM', 'name': 'NB_GSM', 'placeholder': 'Téléphone', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
-    pseudo = forms.CharField(required=True, max_length=user._meta.get_field(
+    pseudo = forms.CharField(required=True, max_length=client._meta.get_field(
         'pseudo').max_length, widget=forms.TextInput(attrs={'id': 'pseudo', 'name': 'pseudo', 'placeholder': 'Pseudo', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
-    email = forms.EmailField(max_length=user._meta.get_field(
+    email = forms.EmailField(max_length=client._meta.get_field(
         'e_mail').max_length, required=True, widget=forms.EmailInput(attrs={'id': 'email', 'name': 'email', 'placeholder': 'E-Mail', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
     mot_de_passe = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'id': 'password', 'name': 'password', 'placeholder': 'Mot de passe', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
@@ -27,10 +27,10 @@ class Form_User(forms.Form):
         if any(char.isdigit() for char in prenom):
             self.add_error("prenom", "Prenom est incorrect!")
         pseudo = self.data['pseudo']
-        if user.objects.filter(pseudo=pseudo).exists():
+        if client.objects.filter(pseudo=pseudo).exists():
             self.add_error("pseudo", "pseudo déja existant!")
         email = self.data['email']
-        if user.objects.filter(e_mail=email).exists():
+        if client.objects.filter(e_mail=email).exists():
             self.add_error("email", "email déja existant!")
         telephone = self.data['telephone']
         if not telephone.isdigit():
@@ -53,7 +53,7 @@ class Form_User(forms.Form):
         pseudo = self.cleaned_data['pseudo']
         telephone = self.cleaned_data['telephone']
         confirmation_mot_de_passe = self.cleaned_data['confirmation_mot_de_passe']
-        data = user(nom=nom, prenom=prenom, pseudo=pseudo,
+        data = client(nom=nom, prenom=prenom, pseudo=pseudo,
                           NB_GSM=telephone, e_mail=email)
         data.save()
         data = User.objects.create_user(
@@ -74,11 +74,11 @@ class position(forms.Form):
         value = super(position, self).is_valid()
         return value
 
-    def enregistrer_user(self, pseudo):
+    def enregistrer_client(self, pseudo):
         lat = self.cleaned_data['latitude']
         lng = self.cleaned_data['longitude']
         point = Point(x=float(lng), y=float(lat))
-        data = user.objects.get(pseudo=pseudo)
+        data = client.objects.get(pseudo=pseudo)
         if data:
             data.position = point
             data.save()

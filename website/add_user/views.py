@@ -13,9 +13,7 @@ def compte(request):
         return render(request, 'app/signup.html', {'form': Form_User()})
 
 def add_node(request, pseudo):
-    user_instance = user.objects.get(pseudo=pseudo)
-
-
+    user_instance = client.objects.get(pseudo=pseudo)
     if request.method == 'POST':
         mylatitude = request.POST.get('lat')
         mylongitude = request.POST.get('lng')

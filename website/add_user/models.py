@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.admin import OSMGeoAdmin
 
 
-class user(models.Model):
+class client(models.Model):
     nom=models.CharField(max_length=100,null=True)
     prenom=models.CharField(max_length=100,null=True)
     NB_GSM=models.CharField(max_length=100,null=True)

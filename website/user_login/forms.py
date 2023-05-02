@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-
+from add_user.models import client
 
 class LoginForm(forms.Form):
     pseudo = forms.CharField(
@@ -32,7 +32,7 @@ class LoginForm(forms.Form):
     def is_valid(self, request):
         pseudo = self.data['pseudo']
         mot_de_passe = self.data['mot_de_passe']
-        if User.objects.filter(username=pseudo).exists():
+        if User.objects.filter(username=pseudo).exists()and client.objects.filter(pseudo=pseudo).exists() :
             # Here, we assign the result of authenticate() to a variable
             user = authenticate(request, username=pseudo,
                                 password=mot_de_passe)
