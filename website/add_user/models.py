@@ -3,6 +3,20 @@ from django.contrib.gis.db import models
 from django.contrib.gis.admin import OSMGeoAdmin
 
 
+class project(models.Model):
+    nom_de_projet=models.CharField(max_length=200,null=True)
+    region=models.CharField(max_length=100,null=True)
+    date_de_debut=models.DateTimeField(max_length=100,null=True)
+    date_de_fin=models.DateTimeField(max_length=100,null=True)
+
+    def __str__(self):
+        return f"{self.nom_de_projet}"
+
+
+
+
+
+
 class client(models.Model):
     nom=models.CharField(max_length=100,null=True)
     prenom=models.CharField(max_length=100,null=True)
@@ -12,7 +26,8 @@ class client(models.Model):
     position=models.PointField(null=True)
     image=models.ImageField(null=True)
 
-    nodeuser=models.ForeignKey('add_user.nodes', on_delete=models.CASCADE, null=True, related_name='user')
+    nodeuser=models.ForeignKey('add_user.nodes', on_delete=models.CASCADE, null=True, related_name='client')
+    supervisor=models.ForeignKey('supervisor_login.supervisor', on_delete=models.CASCADE, null=True, related_name='client')
     def __str__(self):
         return f"{self.prenom} {self.nom}"
     

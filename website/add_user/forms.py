@@ -3,6 +3,31 @@ from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
 from .models import *
 
+class form_project(forms.Form):
+    nom_de_projet = forms.CharField(required=True, max_length=project._meta.get_field(
+        'nom_de_projet').max_length, widget=forms.TextInput(attrs={'id': "nom_de_projet", 'name': "nom_de_projet", 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px", 'placeholder': 'nom de projet'}))
+    region = forms.CharField(required=True, max_length=project._meta.get_field(
+        'region').max_length, widget=forms.TextInput(attrs={'id': 'region', 'name': 'region', 'placeholder': 'region', 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px"}))
+  
+    def is_valid(self):
+        nom_de_projet = self.data['nom_de_projet']
+        if project.objects.filter(nom_de_projet=nom_de_projet).exists():
+            self.add_error("nom_de_projet", "nom déja existant!")
+        region = self.data['region']
+        if any(char.isdigit() for char in region):
+            self.add_error("region", "region est incorrect!")            
+
+        value = super(form_project, self).is_valid()
+        return value
+    
+    def enregistrer(self):
+        nom_de_projet = self.cleaned_data['nom_de_projet']
+        # pays = self.cleaned_data['region']
+        
+
+
+
+
 class Form_User(forms.Form):
     nom = forms.CharField(required=True, max_length=client._meta.get_field(
         'nom').max_length, widget=forms.TextInput(attrs={'id': "nom", 'name': "nom", 'class': "form-control shadow-lg p-6 mb-6 rounded", 'style': "font-size: 20px", 'placeholder': 'Nom'}))

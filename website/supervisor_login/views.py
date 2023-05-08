@@ -14,7 +14,7 @@ def login1(request):
             if data is not None:
                 # If authentication is successful, log in the user and redirect to home page
                 login(request, data)
-                return redirect('interface')
+                return redirect('interface' , psedo=pseudo)
         # If the form is not valid or authentication fails, re-render the form with any error messages
         return render(request, 'app/supervisorlogin.html', {'form': formulaire})
     else:

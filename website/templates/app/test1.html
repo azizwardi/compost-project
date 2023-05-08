@@ -54,39 +54,32 @@
 
 </body>
 </html> -->
-{% load static %}
+<!-- {% load static %}
 <html>
   <head>
     <title>Markers Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta charset="utf-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{%static 'css/superviser.css' %}">
    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        
+      
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-    <link href="{% static 'assets/css/sidebar.css' %}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-      html, body, #map {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-      }
-  </style>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
   </head>
   <body>
     <div class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -96,76 +89,247 @@
         </a>
       </div>
     </div>
-    <nav class="main-menu">
-            <ul>
-                <li>
-                    <a href="https://jbfarrow.com">
-                        <i class="fa fa-home fa-2x"></i>
-                        <span class="nav-text">
-                           Home
-                        </span>
-                    </a>
-                  
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                        <i class="fa fa-tachometer fa-2x"></i>
-                        <span class="nav-text">
-                          Dashboard
-                        </span>
-                    </a>
-                    
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                       <i class="fa fa-map-marker fa-2x"></i>
-                        <span class="nav-text">
-                            Map
-                        </span>
-                    </a>
-                </li>
-                <li>
-                   <a href="#">
-                       <i class="fa fa-cogs fa-2x"></i>
-                        <span class="nav-text">
-                            Tools & Resources
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                       <i class="fa fa-info fa-2x"></i>
-                        <span class="nav-text">
-                            Documentation
-                        </span>
-                    </a>
-                </li>
-            </ul>
 
-            <ul class="logout">
-                <li>
-                   <a href="#">
-                         <i class="fa fa-power-off fa-2x"></i>
-                        <span class="nav-text">
-                            Logout
-                        </span>
-                    </a>
-                </li>  
-            </ul>
-          </nav>
-        <div id="map"></div>
+          <form method="POST" style='margin-left:150px' class='form shadow-lg p-3 mb-5 bg-body rounded  mt-2 ms-1  w-75 h-100  position-absolute  '>
+        
+            {% csrf_token %}
+            <div class="container text-center">
+             <div class="row">
+               <div class="col-9">
+                 <div class=' w-100 h-100 map shadow p-3 mb-5 bg-body rounded'  id="map" ></div>
+                
+               </div>
+               <div class="col-3 centre">
+                   <h2 class='text-success'>creation d'un parcelle</h2>
+                 
+               
+                    <div class="input-group mb-3">
+                      <input type="text" id = "nom"  name = "nom" class="form-control form-control-lg bg-light fs-6 shadow p-3 mb-5 bg-body rounded"  placeholder="nom parcelle">
+                    </div>
+                     <button class="btn btn-success shadow p-3 mb-5 centre " id="save-polygon-btn">Save Polygon</button>
+                </div>
+   
+   
+   
+   
+   
+             </div>
+            </div>
+           </form>
         <script>
-                  var map = L.map('map',{
-                    maxZoom: 20,
-                    minZoom: 6,
-                    zoomControl: false
-                  }).setView([35, 9.5], 7 );
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          }).addTo(map);
-          L.control.zoom({
-          position: 'bottomright'
-          }).addTo(map);
+     const mapElement = document.getElementById('map')
+     var map = L.map(mapElement).setView([36.844461, 10.151367], 5);
+     L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: ''
+    }).addTo(map);
         </script>
   </body>
-    </html>
+    </html> -->
+
+
+    {% load static %}
+    <html>
+      <head>
+        <title>Markers Map</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <meta charset="utf-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{%static 'assets/css/scroll.css' %}"> 
+       
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+            integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+          
+        
+            
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    
+      </head>
+        <div class="position-relative m-5 " style="width:50%;">
+          <div class="progress" style="height: 2px;">
+            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;" onclick="updateProgress(1)">1</button>
+          <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;" onclick="updateProgress(2)">2</button>
+          <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;" onclick="updateProgress(3)">3</button>
+        </div>
+
+        <div class="dropdown">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown link
+          </a>
+        
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+        <!-- Example single danger button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+<!-- Large button groups (default and split) -->
+<div class="btn-group">
+  <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Large button
+  </button>
+  <ul class="dropdown-menu">
+    ...
+  </ul>
+</div>
+<div class="btn-group">
+  <button class="btn btn-secondary btn-lg" type="button">
+    Large split button
+  </button>
+  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    ...
+  </ul>
+</div>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+    <li><a class="dropdown-item active" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+<!-- Default dropstart button -->
+<div class="btn-group dropstart">
+  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropstart
+  </button>
+  <ul class="dropdown-menu">
+    <!-- Dropdown menu links -->
+  </ul>
+</div>
+
+<!-- Split dropstart button -->
+<div class="btn-group">
+  <div class="btn-group dropstart" role="group">
+    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropstart</span>
+    </button>
+    <ul class="dropdown-menu">
+      <!-- Dropdown menu links -->
+    </ul>
+  </div>
+  <button type="button" class="btn btn-secondary">
+    Split dropstart
+  </button>
+  <!-- Default dropstart button -->
+<div class="btn-group dropstart">
+  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropstart
+  </button>
+  <ul class="dropdown-menu">
+    <!-- Dropdown menu links -->
+  </ul>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+
+  <!-- Exaple 1 -->
+  <div class="card example-1 square scrollbar-dusty-grass square thin">
+    <div class="card-body">
+      <h4 id="section1"><strong>Fourth title of the news</strong></h4>
+      <p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out
+        qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan
+        mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim
+        qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic.
+        Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.</p>
+    </div>
+  </div>
+  <!-- Exaple 1 -->
+
+</div>
+</div>
+<!-- Grid row -->
+<div class="row">
+
+  <!-- Grid column -->
+  <div class="col-md-6 mb-4">
+
+    <!-- Exaple 1 -->
+    <div class="card example-1 scrollbar-deep-purple bordered-deep-purple thin">
+      <div class="card-body">
+        <h4 id="section1"><strong>Third title of the news</strong></h4>
+        <p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out
+          qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan
+          mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim
+          qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic.
+          Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.</p>
+      </div>
+    </div>
+    <!-- Exaple 1 -->
+
+  </div>
+  <!-- Grid column -->
+
+  <!-- Grid column -->
+  <div class="col-md-6">
+
+    <!-- Exaple 1 -->
+    <div class="card example-1 square scrollbar-dusty-grass square thin">
+      <div class="card-body">
+        <h4 id="section1"><strong>Fourth title of the news</strong></h4>
+        <p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out
+          qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan
+          mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim
+          qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic.
+          Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.</p>
+      </div>
+    </div>
+    <!-- Exaple 1 -->
+
+  </div>
+  <!-- Grid column -->
+
+</div>
+<!-- Grid row -->
+<!-- Grid column -->
+
+
+        <script>
+          function updateProgress(step) {
+  let progressBar = document.querySelector('.progress-bar');
+  let progressValue = 0;
+  if (step === 1) {
+    progressValue = 33;
+  } else if (step === 2) {
+    progressValue = 66;
+  } else if (step === 3) {
+    progressValue = 100;
+  }
+  progressBar.style.width = progressValue + '%';
+  progressBar.setAttribute('aria-valuenow', progressValue);
+}
+
+        </script>
