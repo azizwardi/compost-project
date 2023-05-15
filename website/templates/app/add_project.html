@@ -12,6 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
+
+
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="container">
       <div class="row d-flex justify-content-center">
@@ -56,23 +58,27 @@
                   </div>
                   
                   <div class="col">
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         Add Client
                       </a>
-                      <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+                      <ul class="dropdown-menu"  name="client" style="max-height: 200px; overflow-y: auto;">
                         <li><a class="dropdown-item" href="#" onclick="updateSelected('New Client')"><span class="plus">+</span> New Client</a></li>
                         {% for clientt in clients %}
-                          <li><a class="dropdown-item" href="#" onclick="updateSelected('{{ clientt.pseudo }}')">{{ clientt.pseudo }}</a></li>
+                          <li><a class="dropdown-item" href="#"  onclick="updateSelected('{{ clientt.id }}')">{{ clientt.pseudo }}</a></li>
                         {% endfor %}
                       </ul>
+                    </div> -->
+                    <div class="input-group mb-3">
+                      <select id="client" name="client" class="form-select form-select-lg bg-light fs-6 shadow mb-5 mt-5 bg-body rounded" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        {% for clientt in clients %}
+                        <option value="{{ clientt.pk }}">{{ clientt.pseudo }}</option>
+                        {% endfor %}
+                        <option value="new_client">New Client</option>
+                      </select>
                     </div>
-                    <br>
                     <div class="col">
-                      <div class="form-control shadow-lg p-3 mb-3 rounded bg-white" style="font-size:20px;">
-                        <input  id="selectedItem" name="selecteditem" class="form-control shadow-lg p-3 mb-3 rounded bg-white" style="font-size:20px;"> 
-                      </div>
-                      <br>
                       <div class="d-grid">
                         <button class="btn btn-outline-dark" type="submit" value="save">Suivant</button>
                       </div>
@@ -86,11 +92,13 @@
       </div>
     </div>
   </div>
-<script>
-  function updateSelected(selectedItem) {
-    document.getElementById("selectedItem").value = selectedItem;
-  }
-
+  <script>
+    const clientSelect = document.getElementById('client');
+    clientSelect.addEventListener('change', function() {
+      if (clientSelect.value === 'new_client') {
+        // display form to add new client
+      }
+    });
   </script>
     <script>
       const startDateField = document.getElementById("start_date");

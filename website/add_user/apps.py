@@ -1,6 +1,10 @@
 from django.apps import AppConfig
 
 
-class AddUserConfig(AppConfig):
+class MapConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'add_user'
+
+    def ready(self):
+        from . import mqtt
+        mqtt.client.loop_start()

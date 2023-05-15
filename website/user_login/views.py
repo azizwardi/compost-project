@@ -14,7 +14,7 @@ def login2(request):
                                 password=mot_de_passe)
             if data is not None:
                 login(request, data)
-                return redirect('user_interface', pseudo)
+                return redirect('user_interface', pseudo=pseudo)
         # We pass the form to the template even if it is not valid
         return render(request, 'app/userlogin.html', {'form': formulaire})
     # We pass the form to the template for GET requests

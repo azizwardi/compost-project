@@ -42,11 +42,22 @@
           <input type="text" id="lat" name="lat"> 
           <label for="lng">Longitude:</label> 
           <input type="text" id="lng" name="lng"> 
+          <div class="input-group mb-1">
+            <select id = "ref" name="ref" class="form-select  form-select-lg bg-light fs-6 shadow  mb-5  bg-body rounded" aria-label="Default select example">
+              <option selected>choisir référence node</option>
+              
+              
+              <option value='eui-70b3d57ed005a5c4'>eui-70b3d57ed005a5c4</option>
+              <option value='1234f1234'>1234f1234</option>
+             
+            </select>
+          </div>
           <br> <br>
           <button class="btn btn-dark mx-auto d-block" style='font-size: 15px; background-color: darkgreen;' onclick="location.href='#'">Save Node</button> 
         </form> 
       </center>
-      
+    
+
       <script>
       
       

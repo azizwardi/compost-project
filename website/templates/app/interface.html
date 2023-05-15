@@ -22,6 +22,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+
 
   </head>
   <body>
@@ -92,11 +94,11 @@
           </li>  
       </ul>
     </nav>
-
-    <div class="container">
+<form method="post">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <div class="card shadow mb-5 mt-5 example-1 square scrollbar-dusty-grass square thin" style="height:350px;">
+          <div class="card shadow mb-5 mt-5 px-5  example-1 square scrollbar-dusty-grass square thin" style="height:350px;">
             <div class="card-body text-start">
               <h5 class="card-title">All the projects</h5>
               <p class="card-text">
@@ -105,84 +107,60 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Nom de projet</th>
-                      <th scope="col">Nom de client</th>
+                      <th scope="col">Nom de utilisateur</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
+                  {% for project in projects %}
                   <tbody>
                     <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td><button type="button" class="btn btn-outline-success">Open</button></td>
-                    </tr>
+                     
+                      <th scope="row"></th>
+                      <td>{{ project.nom_de_projet }}</td>
+                      <td>{{ project.region }}</td>
+                      <td><button type="submit" name="button" value="{{ project.id_projet }}" class="btn btn-outline-success">open</button></td>
+
+                     
                     <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td><button type="button" class="btn btn-outline-success">Open</button></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">5</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">6</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">7</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">8</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
                   </tbody>
+                  {% endfor %}
                 </table>
               </p>
             </div>
           </div>    
-          <div class="card shadow mb-5 mt-5" style="height:350px;">
+          <div class="card shadow p-5" style="height:350px;">
             <div class="card-body text-start">
               <h5 class="card-title">More informations</h5>
-              <p class="card-text"></p>
+              <p class="card-text">
+                <div class="list-group list-group-light">
+              
+                  <a class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 ">
+                     User Name: {{ project1.clients.prenom }} {{ project1.clients.nom }}</a>
+                  <a class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 ">
+                    Project Name: {{ project1.nom_de_projet }}</a>
+                  <a class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 ">
+                    Date de debut: {{ project1.date_de_debut }}</a>
+                  <a class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 ">
+                    Date de fin: {{ project1.date_de_fin }}</a>
+                  
+                </div>
+              </p>
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="row">
-            <form method="POST" class='form p-5 rounded w-50 position-absolute'>
+            <form method="POST" class='form rounded w-100 position-absolute'>
               {% csrf_token %}
               <div class="col-12">
-                <div class='map shadow p-3 mb-5 bg-body rounded' style="height:750px;" id="map"></div>
+                <div class='map shadow mt-5 bg-body rounded' style="height:750px;" id="map"></div>
               </div>
             </form>
           </div>
         </div>
-      </div>
+      </div>  
     </div>
-    
+</form>
 
         <!-- The Modal -->
 <div class="modal fade" id="myModal">
@@ -210,26 +188,30 @@
 </div>
 
     
-    <script>
-      
-      
-      // Create a Leaflet map
-      var map = L.map('map').setView([35, 9.57], 7 );
-      
-      
-      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        {% for nod in nods %}
-    var marker = L.marker([{{ nod.Position.y }}, {{ nod.Position.x }}]).addTo(map);
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+
+<script>
+
+  // Create a Leaflet map
+  var map = L.map('map').setView([35, 9.57], 7);
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+  // create a new GeoSearch control and add it to your map
+  var provider = new GeoSearch.OpenStreetMapProvider();
+  var searchControl = new GeoSearch.GeoSearchControl({
+    provider: provider,
+  });
+  map.addControl(searchControl);
+
+  {% if nods1 %}
+    var marker = L.marker([{{ nods1.Position.y }}, {{ nods1.Position.x }}]).addTo(map);
     marker.bindPopup("<h5>{{ nod.Name }}</h5><p>{{ nod.Description }}</p><button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>More informations</button>");
-{% endfor %}
+  {% endif %}
 
+</script>
 
-      
- 
-      </script>
+    
 
 
   </body>
