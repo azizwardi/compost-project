@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib.gis.geos import Point
 from .models import client,project
+from .models import Post
 
 def add_project(request):
   clients = client.objects.all()

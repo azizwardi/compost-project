@@ -68,7 +68,7 @@ class Post(models.Model):
     temperature = models.BigIntegerField()
     humidity = models.BigIntegerField()
     published_date = models.DateTimeField(blank=True, null=True)
-    node = models.ForeignKey(nodes,null=True,on_delete=models.CASCADE)
+    node = models.ForeignKey(nodes, null=True, on_delete=models.CASCADE)
 
     def publish(self):
         self.published_date = timezone.now()

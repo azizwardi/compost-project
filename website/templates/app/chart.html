@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% if chart_data_available %}
+        <canvas id="myChart"></canvas>
+
+        <script>
+            // Retrieve the data from the Django context
+            var temperatureData = JSON.parse('{{ temperature_data|safe }}');
+            var humidityData = JSON.parse('{{ humidity_data|safe }}');
+
+            // Create the chart
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Temperature',
+                        data: temperatureData,
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Humidity',
+                        data: humidityData,
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {}
+            });
+        </script>
+    {% else %}
+        <p>No data available for chart.</p>
+    {% endif %}
+</body>
+</html>
