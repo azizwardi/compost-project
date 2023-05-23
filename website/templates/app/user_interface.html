@@ -94,7 +94,7 @@
 
           {% if mynode %}
           var marker = L.marker([{{ mynode.Position.y }}, {{ mynode.Position.x }}]).addTo(map);
-          marker.bindPopup("<h5>{{ mynode.Name }}</h5><button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>More informations</button>");
+          marker.bindPopup("<p>temp: {{ data.temperature }}<p><p>hum :{{ data.humidity }}</p><h5>{{ nods1.Name }}</h5>");  
           {% endif %}
 
         </script>

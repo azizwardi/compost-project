@@ -71,7 +71,7 @@ class Form_User(forms.Form):
         value = super(Form_User, self).is_valid()
         return value
 
-    def enregistrer(self):
+    def enregistrer(self,project_instance):
         nom = self.cleaned_data['nom']
         prenom = self.cleaned_data['prenom']
         email = self.cleaned_data['email']
@@ -81,9 +81,18 @@ class Form_User(forms.Form):
         data = client(nom=nom, prenom=prenom, pseudo=pseudo,
                           NB_GSM=telephone, e_mail=email)
         data.save()
-        data = User.objects.create_user(
+
+
+
+
+                
+        project_instance.clients=data
+        project_instance.save()
+        data= User.objects.create_user(
             pseudo, email, confirmation_mot_de_passe)
         data.save()
+
+
 
 class position(forms.Form):
     latitude = forms.FloatField(required=False, widget=forms.HiddenInput(

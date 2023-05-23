@@ -36,8 +36,7 @@ def compte(request, id_projet):
         if request.method == 'POST':
             formulaire = Form_User(request.POST)
             if formulaire.is_valid():
-                formulaire.enregistrer()
-                pseudo = formulaire.cleaned_data['pseudo']
+                formulaire.enregistrer(project_instance)
                 return redirect('add_node',project_instance.id_projet)
             return render(request, 'app/signup.html', {'form': formulaire})
         return render(request, 'app/signup.html', {'form': Form_User()})

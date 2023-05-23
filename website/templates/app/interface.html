@@ -106,8 +106,8 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Nom de projet</th>
-                      <th scope="col">Nom de utilisateur</th>
+                      <th scope="col">Project name</th>
+                      <th scope="col">User name</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -117,7 +117,7 @@
                      
                       <th scope="row"></th>
                       <td>{{ project.nom_de_projet }}</td>
-                      <td>{{ project.region }}</td>
+                      <td>{{ project.clients.prenom }} {{ project.clients.nom }}</td>
                       <td><button type="submit" name="button" value="{{ project.id_projet }}" class="btn btn-outline-success">open</button></td>
 
                      
@@ -206,7 +206,7 @@
 
   {% if nods1 %}
     var marker = L.marker([{{ nods1.Position.y }}, {{ nods1.Position.x }}]).addTo(map);
-    marker.bindPopup("<h5>{{ nod.Name }}</h5><p>{{ nod.Description }}</p><button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>More informations</button>");
+    marker.bindPopup("<p>temp: {{ data.temperature }}<p><p>hum :{{ data.humidity }}</p><h5>{{ nods1.Name }}</h5><button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>More informations</button>");
   {% endif %}
 
 </script>
