@@ -18,17 +18,17 @@
         <div class="col-12 col-md-8 col-lg-6">
               <form method="POST" id="form" class="shadow-lg p-4 rounded">
                 {% csrf_token %}
-                <h1 class="mb-4 ">Ajouter un client</h1>
+                <h1 class="mb-4 ">Add client</h1>
                 <div class="row mb-3">
                   <div class="col">
-                    <h4>Nom</h4>
+                    <h4>First name</h4>
                     {{ form.nom }}
                     {% if form.nom.errors %}
                       <strong class="text-danger" role="alert">{{ form.nom.errors }}</strong>
                     {% endif %}
                   </div>
                   <div class="col">
-                    <h4>Prénom</h4>
+                    <h4>Last name</h4>
                     {{ form.prenom }}
                     {% if form.prenom.errors %}
                       <strong class="text-danger" role="alert">{{ form.prenom.errors }}</strong>
@@ -37,14 +37,14 @@
                 </div>
                 <div class="row mb-3">
                   <div class="form-label">
-                    <h4>Pseudo</h4>
+                    <h4>Username</h4>
                     {{ form.pseudo }}
                     {% if form.pseudo.errors %}
                       <strong class="text-danger" role="alert">{{ form.pseudo.errors }}</strong>
                     {% endif %}
                   </div>
                   <div class="col">
-                    <h4>Téléphone</h4>
+                    <h4>Phone   </h4>
                     {{ form.telephone }}
                     {% if form.telephone.errors %}
                       <strong class="text-danger" role="alert">{{ form.telephone.errors }}</strong>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="mb-3">
                   <div class="col">
-                    <h4>Mot de passe</h4>
+                    <h4>Password</h4>
                     {{ form.mot_de_passe }}
                     {% if form.mot_de_passe.errors %}
                       <strong class="text-danger" role="alert">{{ form.mot_de_passe.errors }}</strong>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="mb-3">
                   <div class="col">
-                    <h4>Confirmation du mot de passe</h4>
+                    <h4>Confirme password</h4>
                     {{ form.confirmation_mot_de_passe }}
                     {% if form.confirmation_mot_de_passe.errors %}
                       <strong class="text-danger" role="alert">{{ form.confirmation_mot_de_passe.errors }}</strong>
@@ -77,7 +77,7 @@
                   </div>
                 </div>
                 <div class="d-grid">
-                  <button class="btn btn-outline-dark" type="submit" value="save">Suivant</button>
+                  <button class="btn btn-outline-dark" type="submit" value="save">Next</button>
                 </div>
               </form>
         </div>

@@ -4,7 +4,7 @@ from django.contrib.gis.geos import Point
 from .models import client,project
 from .models import Post
 
-def add_project(request):
+def add_project(request, psedo):
   clients = client.objects.all()
   if request.method == 'POST':
     formul = form_project(request.POST)
@@ -18,30 +18,30 @@ def add_project(request):
       if cl == 'new_client':
         data = project(nom_de_projet=nom_de_projet, region=region, date_de_debut=debutp, date_de_fin=finp)
         data.save()
-        return redirect('compte', data.id_projet)
+        return redirect('compte', data.id_projet, psedo)
       else:
         lient = client.objects.get(pk=cl)
         data = project(nom_de_projet=nom_de_projet, region=region, date_de_debut=debutp, date_de_fin=finp, clients=lient)
         data.save()
-        return redirect('add_node', id_projet=data.id_projet)
+        return redirect('add_node', id_projet=data.id_projet, psedo=psedo)
     return render(request, 'app/add_project.html', {'formprojet':formul})
   return render(request, 'app/add_project.html', {'formprojet':form_project, 'clients':clients})
 
      
 
 
-def compte(request, id_projet):
+def compte(request, id_projet, psedo):
         project_instance = project.objects.get(id_projet=id_projet)
 
         if request.method == 'POST':
             formulaire = Form_User(request.POST)
             if formulaire.is_valid():
-                formulaire.enregistrer(project_instance)
-                return redirect('add_node',project_instance.id_projet)
+                formulaire.enregistrer(project_instance, psedo)
+                return redirect('add_node',project_instance.id_projet, psedo)
             return render(request, 'app/signup.html', {'form': formulaire})
         return render(request, 'app/signup.html', {'form': Form_User()})
 
-def add_node(request, id_projet):
+def add_node(request, id_projet, psedo):
     project_instance = project.objects.get(id_projet=id_projet)
     if request.method == 'POST':
         mylatitude = request.POST.get('lat')
@@ -55,6 +55,16 @@ def add_node(request, id_projet):
 
         project_instance.nodeuser = node_instance
         project_instance.save()
+
+        tem=0
+        him=0
+        instance = Post(temperature=tem,humidity=him)
+        instance.save()
+
+        instance.node=node_instance
+        instance.save()
         
-        return redirect('interface',id_projet)
+        print(psedo)
+        
+        return redirect('interface',psedo)
     return render(request, 'app/maps.html', {})

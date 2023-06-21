@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/scroll.css' %}">
+<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="{% static 'assets/css/prog.css' %}" rel="stylesheet">
+
+<div class="vh-100 d-flex justify-content-center align-items-center">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <form method="POST" id="formprojet" class="shadow-lg p-4 rounded">
+          {% csrf_token %}
+          <h1 class="mb-4">Modifier un projet</h1>
+          <div class="row mb-3">
+            <div class="col">
+              <h4>Nom de projet</h4>
+              {{ formprojet.nom_de_projet }}
+              {% if formprojet.nom_de_projet.errors %}
+                <strong class="text-danger" role="alert">{{ formprojet.nom_de_projet.errors }}</strong>
+              {% endif %}
+            </div>
+            <div class="col">
+              <h4>Region</h4>
+              {{ formprojet.region }}
+              {% if formprojet.pays.errors %}
+                <strong class="text-danger" role="alert">{{ formprojet.region.errors }}</strong>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <h4>Date de création</h4>
+              {{ formprojet.debutp }}
+            </div>
+            <div class="col">
+              <h4>Date de fin</h4>
+              {{ formprojet.finp }}
+            </div>
+          </div>
+          <div class="col">
+            <h4>Client</h4>
+            {{ formprojet.client }}
+          </div>
+          <div class="col">
+            <div class="d-grid">
+              <button class="btn btn-outline-dark" type="submit" value="save">Enregistrer</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const clientSelect = document.getElementById('client');
+  clientSelect.addEventListener('change', function() {
+    if (clientSelect.value === 'new_client') {
+      // display form to add new client
+    }
+  });
+</script>
+<script>
+  const startDateField = document.getElementById("start_date");
+  const endDateField = document.getElementById("end_date");
+
+  startDateField.addEventListener("input", function() {
+    endDateField.min = this.value;
+  });
+</script>
+
+{% endblock %}

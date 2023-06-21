@@ -22,13 +22,33 @@
       integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+      <style>
+        #myChart {
+          margin-top: 10px;
+          width: 100% !important;
+          height: 350px !important;
+        }
+      
+        #myhum {
+          margin-top: 10px;
+          width: 100% !important;
+          height: 350px !important;
+        }
+      </style>
+      
+      
+ 
 
     </head>
     
-    <body>
+    <body style="background-color: rgb(226, 224, 224);">
       <div class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
           <a class="navbar-brand ms-auto" href="#">
+            
             <img src="{% static 'assets/img/img_avatar1.png' %}" alt="Logo" style="width:40px;" class="rounded-pill">
           </a>
         </div>
@@ -36,43 +56,31 @@
       <form method="post">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12 col-md-9 order-md-1 order-2">
-              <div class="card shadow mb-5 mt-5 h-100">
+            <div class="col- col-md-9 order-md-1 order-2">
+              <div class="card shadow mb-5 mt-5">
                 <div class="card-body text-start">
-                  <h5 class="card-title">More information</h5>
-                  <p class="card-text"></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-3 order-md-2 order-1">
-              <div class="card shadow mb-5 mt-5" style="height: 350px;">
-                <div class="card-body text-start">
-                  <h5 class="card-title">My projects</h5>
+                  <h5 class="card-title"></h5>
                   <p class="card-text">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">Nom de projet</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      {% for project in projects %}
-                      <tbody>
-                        <tr>
-                          <th scope="row"></th>
-                          <td>{{ project.nom_de_projet }}</td>
-                          <td><button type="submit" name="button" value="{{ project.id_projet }}" class="btn btn-outline-success">open</button></td>
-                        <tr>
-                      </tbody>
-                      {% endfor %}
-                    </table>
+                    <div style="width:100%; height: 400px;">
+                    <canvas id="myChart" ></canvas>
+                  </div>
+                  <div>
+                    <canvas id="myhum" ></canvas>
+                  </div>
                   </p>
                 </div>
               </div>
-              <div class='form rounded w-100 '>
+            </div>
+            <div class="col- col-md-3 order-md-2 order-1">
+              <div class='form rounded w-100 mt-5'>
                 {% csrf_token %}
-                <div class="map shadow bg-body rounded-top rounded-bottom" style="height: 350px; width: 100%;" id="map"></div>
+                <div class="map shadow bg-body rounded-top rounded-bottom" style="height: 340px; width: 100%;" id="map"></div>
+              </div>
+              <div class="card shadow mb-5 mt-5" style="height: 440px;">
+                <div class="card-body">
+                  <h5 class="card-title">Alerts</h5>
+                  <ul id="alertList"></ul>
+                </div>
               </div>
             </div>
           </div>
@@ -81,23 +89,143 @@
       
       
 
-      
-      
-      
-      
+
+
       <script>
         // Create a Leaflet map
+        console.log("{{user.id}}")
         var map = L.map('map').setView([35, 9.5], 7 );
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           }).addTo(map);
+          console.log("aaaaaa")
+          {% if nods %}
+          var marker = L.marker([{{ nods.Position.y }}, {{ nods.Position.x }}]).addTo(map);
+          marker.bindPopup("<h6>Temprature: {{ data.temperature }} °C</h6><h6>Humidity:{{ data.humidity }} %</h6><h6>RSSI: {{ nods.RSSI }} dBm</h6><h6>Snr: {{ nods.snr }} dB</h6><h6>Ref: {{ nods.ref }}</h6>");
+          
+          
 
-          {% if mynode %}
-          var marker = L.marker([{{ mynode.Position.y }}, {{ mynode.Position.x }}]).addTo(map);
-          marker.bindPopup("<p>temp: {{ data.temperature }}<p><p>hum :{{ data.humidity }}</p><h5>{{ nods1.Name }}</h5>");  
+  // Check temperature and add alert to the card
+  if ({{ data.temperature }} > 20) {
+    var alertList = document.getElementById("alertList");
+    var alertItem = document.createElement("li");
+    alertItem.textContent = "Temperature is above 20°C!";
+    alertList.appendChild(alertItem);
+  }
           {% endif %}
 
+
         </script>
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tempData = JSON.parse('{{ ltemp|safe }}');
+    const humData = JSON.parse('{{ lhum|safe }}');
+
+    const xValuesTemp = [];
+    const yValuesTemp = [];
+    t = 0;
+
+    tempData.forEach(function(temp) {
+      xValuesTemp.push(t + 1);
+      yValuesTemp.push(temp);
+      t += 1;
+    });
+
+    const ctxTemp = document.getElementById('myChart').getContext('2d');
+    new Chart(ctxTemp, {
+      type: 'line',
+      data: {
+        labels: xValuesTemp,
+        datasets: [{
+          label: 'Temperature',
+          data: yValuesTemp,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: 'Temperature',
+              font: {
+                size: 30,
+                family: 'Arial',
+                weight: 'bold',
+                color: 'rgba(255, 99, 132, 1)'
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tempData = JSON.parse('{{ ltemp|safe }}');
+    const humData = JSON.parse('{{ lhum|safe }}');
+
+    const xValuesHum = [];
+    const yValuesHum = [];
+    t = 0;
+
+    humData.forEach(function(hum) {
+      xValuesHum.push(t + 1);
+      yValuesHum.push(hum);
+      t += 1;
+    });
+
+    const ctxHum = document.getElementById('myhum').getContext('2d');
+    new Chart(ctxHum, {
+      type: 'line',
+      data: {
+        labels: xValuesHum,
+        datasets: [{
+          label: 'Humidity',
+          data: yValuesHum,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: 'Humidity',
+              font: {
+                size: 14,
+                family: 'Arial',
+                weight: 'bold',
+                color: 'rgba(54, 162, 235, 1)'
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  });
+</script>
+
+
     </body>
   </html>
 {% endblock %}

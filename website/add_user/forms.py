@@ -2,6 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
 from .models import *
+from supervisor_login.models import *
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 class form_project(forms.Form):
     nom_de_projet = forms.CharField(required=True, max_length=project._meta.get_field(
@@ -71,27 +75,100 @@ class Form_User(forms.Form):
         value = super(Form_User, self).is_valid()
         return value
 
-    def enregistrer(self,project_instance):
+    def enregistrer(self,project_instance, psedo):
         nom = self.cleaned_data['nom']
         prenom = self.cleaned_data['prenom']
         email = self.cleaned_data['email']
         pseudo = self.cleaned_data['pseudo']
         telephone = self.cleaned_data['telephone']
         confirmation_mot_de_passe = self.cleaned_data['confirmation_mot_de_passe']
+        sv= supervisor.objects.get(pseudo=psedo)
         data = client(nom=nom, prenom=prenom, pseudo=pseudo,
                           NB_GSM=telephone, e_mail=email)
         data.save()
 
 
-
-
+        data.supervisor=sv
+        data.save()
                 
         project_instance.clients=data
         project_instance.save()
         data= User.objects.create_user(
             pseudo, email, confirmation_mot_de_passe)
         data.save()
+            # Get the client email entered by the user
+            # client_email = request.POST.get('client_email')
+            
+            # Prepare the email subject and message
+        subject = 'Client data!'
+        context = { 
+                'nom': nom,
+                'prenom': prenom,
+                'email': email,
+                'phone': telephone,
+                'mdp': confirmation_mot_de_passe, 
+                'pseudo' : pseudo,
+            }
+        html_message = render_to_string('app/email_template.html', context)
+        plain_message = strip_tags(html_message)
+            
+            # Send the email
+        send_mail(subject, plain_message, 'wardiaziz2507@gmail.com', [email], html_message=html_message)     
 
+
+
+
+    def enregistrer1(self,project_instance, psedo, id):
+        nom = self.cleaned_data['nom']
+        prenom = self.cleaned_data['prenom']
+        email = self.cleaned_data['email']
+        pseudo = self.cleaned_data['pseudo']
+        telephone = self.cleaned_data['telephone']
+        confirmation_mot_de_passe = self.cleaned_data['confirmation_mot_de_passe']
+        sv= supervisor.objects.get(pseudo=psedo)
+
+        dataa = client.objects.get(id=id)
+        # data = client(nom=nom, prenom=prenom, pseudo=pseudo,
+        #                  NB_GSM=telephone, e_mail=email)
+        # data.save()
+        dataa.nom=nom
+        dataa.save()
+
+        dataa.prenom=prenom
+        dataa.save()
+
+        dataa.pseudo=pseudo
+        dataa.save()
+
+        dataa.NB_GSM=telephone
+        dataa.save()
+
+        dataa.e_mail=email
+        dataa.save()
+        
+        dataa.supervisor=sv
+        dataa.save()
+                
+     
+
+            # Get the client email entered by the user
+            # client_email = request.POST.get('client_email')
+            
+            # Prepare the email subject and message
+        subject = 'Client data!'
+        context = { 
+                'nom': nom,
+                'prenom': prenom,
+                'email': email,
+                'phone': telephone,
+                'mdp': confirmation_mot_de_passe, 
+                'pseudo' : pseudo,
+            }
+        html_message = render_to_string('app/email_template.html', context)
+        plain_message = strip_tags(html_message)
+            
+            # Send the email
+        send_mail(subject, plain_message, 'wardiaziz2507@gmail.com', [email], html_message=html_message)     
 
 
 class position(forms.Form):

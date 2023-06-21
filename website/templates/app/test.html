@@ -1,46 +1,44 @@
-{% load static %}
-<link href="{% static 'assets/css/prog.css' %}" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<div class="d-flex flex-column justify-content-center w-100 h-100"></div>
 
+<style>
 
-
-<!-- multistep form -->
-<form id="msform">
-  <!-- progressbar -->
-  <ul id="progressbar">
-    <li class="active">Account Setup</li>
-    <li>Social Profiles</li>
-    <li>Personal Details</li>
-  </ul>
-  <!-- fieldsets -->
-  <fieldset>
-    <h2 class="fs-title">Create your account</h2>
-    <h3 class="fs-subtitle">This is step 1</h3>
-    <input type="text" name="email" placeholder="Email" />
-    <input type="password" name="pass" placeholder="Password" />
-    <input type="password" name="cpass" placeholder="Confirm Password" />
-    <input type="button" name="next" class="next action-button" value="Next" />
-  </fieldset>
-  <fieldset>
-    <h2 class="fs-title">Social Profiles</h2>
-    <h3 class="fs-subtitle">Your presence on the social network</h3>
-    <input type="text" name="twitter" placeholder="Twitter" />
-    <input type="text" name="facebook" placeholder="Facebook" />
-    <input type="text" name="gplus" placeholder="Google Plus" />
-    <input type="button" name="previous" class="previous action-button" value="Previous" />
-    <input type="button" name="next" class="next action-button" value="Next" />
-  </fieldset>
-  <fieldset>
-    <h2 class="fs-title">Personal Details</h2>
-    <h3 class="fs-subtitle">We will never sell it</h3>
-    <input type="text" name="fname" placeholder="First Name" />
-    <input type="text" name="lname" placeholder="Last Name" />
-    <input type="text" name="phone" placeholder="Phone" />
-    <textarea name="address" placeholder="Address"></textarea>
-    <input type="button" name="previous" class="previous action-button" value="Previous" />
-    <a href="https://twitter.com/GoktepeAtakan" class="submit action-button" target="_top">Submit</a>
-  </fieldset>
-</form>
-
-<script src="{% static 'assets/js/prog.js' %}"></script>
+html {	
+	--u: 1.25vmin;
+	--c1: #9422f1;
+	--c2: #25e5fc;
+	--c3: #149fec;
+	--c4: #89ed00;
+	--c5: #f9f300;
+	--c6: #f5b900;
+	--c7: #ec0000;
+	--c8: #ff4545;
+	--c9: #ffffff;
+	--c0: #2c2c2c;
+  --gp: 50%/calc(var(--u) * 18) calc(var(--u) * 12);
+  --rainbow: 
+		var(--c0) 0 calc(var(--u) * 2.25), 
+		var(--c1) 0 calc(var(--u) * 3.25), 
+		var(--c2) calc(var(--u) * 3.35) calc(var(--u) * 4.25), 
+		var(--c3) calc(var(--u) * 4.35) calc(var(--u) * 5.25), 
+		var(--c4) calc(var(--u) * 5.35) calc(var(--u) * 6.25), 
+		var(--c5) calc(var(--u) * 6.35) calc(var(--u) * 7.25), 
+		var(--c6) calc(var(--u) * 7.35) calc(var(--u) * 8.25), 
+		var(--c7) calc(var(--u) * 8.35) calc(var(--u) * 9.25), 
+		#fff0 calc(var(--u) * 9.35) 100%;
+  --shine: 
+		var(--c9) 0 calc(var(--u) * 8.25), 
+		var(--c8) calc(var(--u) * 8.75) calc(var(--u) * 9.25), 
+		#fff0 calc(var(--u) * 9.35) 100%;
+  height: 100vh;
+  background:  				  
+		radial-gradient(circle at 53% 130%, var(--rainbow)) var(--gp), 
+		radial-gradient(circle at 49% 125%, var(--shine)) var(--gp), 
+		linear-gradient(180deg, #fff0 70% , var(--c1) 100%) var(--gp),
+		radial-gradient(circle at 103% 83%, var(--rainbow)) var(--gp), 
+		radial-gradient(circle at 98% 78%, var(--shine)) var(--gp), 
+		radial-gradient(circle at 3% 83%, var(--rainbow)) var(--gp),
+		radial-gradient(circle at -2% 78%, var(--shine)) var(--gp), 
+		linear-gradient(180deg, #fff0 20% , var(--c1) 50%) var(--gp),  
+		radial-gradient(circle at 53% 30%, var(--rainbow)) var(--gp), 
+		radial-gradient(circle at 49% 25%, var(--shine)) var(--gp);
+}

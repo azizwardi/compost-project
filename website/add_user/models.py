@@ -48,6 +48,8 @@ class nodes(models.Model):
     Longitude =models.CharField(max_length=50, null=True,blank=True)
     RSSI = models.BigIntegerField(null=True)
     ref =  models.CharField(max_length=50, null=True)
+    snr =  models.CharField(max_length=50, null=True)
+
 
     def __str__(self):
         return "Node " + str(self.id_node) 

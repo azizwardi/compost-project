@@ -18,9 +18,6 @@ def on_connect(mqtt_client, userdata, flags, rc):
 
         #yassmin card
         mqtt_client.subscribe(topics[1])
-
-        #camera 
-        mqtt_client.subscribe(topics[2])
     else:
         print('Bad connection. Code:', rc)
 
@@ -43,6 +40,8 @@ def on_message(mqtt_client, userdata, msg):
                     print('temperature:', temperature, 'humidity:', humidity, 'rssi:', rssi, 'snr:', snr, '\n')
                     
                     node.RSSI = rssi
+                    node.save()
+                    node.snr = snr
                     node.save()
                     
                     # Create a new Post object and save it to the database
@@ -67,6 +66,3 @@ client.connect(
     port=settings.MQTT_PORT,
     keepalive=settings.MQTT_KEEPALIVE
 )
-
-    # Start the MQTT loop (this function blocks and waits for incoming messages)
-#client.loop_forever()

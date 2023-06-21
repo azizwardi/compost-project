@@ -1,5 +1,5 @@
 {% extends 'app/base.html' %} {% block content %} {% load static %}
-<div class="vh-100 d-flex justify-content-center align-items-center">
+<div class="vh-100 d-flex justify-content-center align-items-center" style="background-color: rgb(226, 224, 224);">
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-8 col-lg-6">
@@ -8,23 +8,27 @@
           <div class="card-body p-5">
             <form class="mb-3 mt-md-4" method="post">
               {% csrf_token %}
-              <h2 class="fw-bold mb-2 text-uppercase ">User</h2>
-              <p class=" mb-5">Please enter your login and password!</p>
+              <h2 class="fw-bold mb-2 text-uppercase">Client</h2>
+              <p class="mb-5">Please enter your username and password!</p>
               <div class="mb-3">
-                <label for="email" class="form-label ">Username</label>
+                <label for="email" class="form-label">Username</label>
                 {{ form.pseudo }}
-                {% if form.pseudo.errors %}<h4>
-                <div class="text-danger" role="alert">{{ form.pseudo.errors }}</div></4>
+                {% if form.pseudo.errors %}
+                <h4>
+                  <div class="text-danger" role="alert">{{ form.pseudo.errors }}</div>
+                </h4>
                 {% endif %}
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label ">Password</label>
+                <label for="password" class="form-label">Password</label>
                 {{ form.mot_de_passe }}
-                {% if form.mot_de_passe.errors %}<h4>
-                <div class="text-danger" role="alert">{{ form.mot_de_passe.errors }}</div></h4>
+                {% if form.mot_de_passe.errors %}
+                <h4>
+                  <div class="text-danger" role="alert">{{ form.mot_de_passe.errors }}</div>
+                </h4>
                 {% endif %}
               </div>
-              <p class="small"><a class="text-primary" href="forget-password.html">Forgot password?</a></p>
+              <p class="small"><a class="text-primary" href="{% url 'password-reset' %}">Forgot password?</a></p>
               <div class="d-grid">
                 <button class="btn btn-outline-dark" type="submit">Login</button>
               </div>
@@ -35,4 +39,5 @@
     </div>
   </div>
 </div>
+
   {% endblock %}   
